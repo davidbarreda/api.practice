@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Api.Practice.Entities;
 
-public class ForecastService
+public class ForecastService : IForecastService
 {
     public Task<Forecast> GetForecast(string postalCode, string time)
     {

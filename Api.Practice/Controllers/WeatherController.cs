@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 public class WeatherController : ControllerBase
 {
     private readonly IValidation<ForecastRequest> postalCodeValidation;
-    private readonly ForecastService forecastService;
+    private readonly IForecastService forecastService;
 
-    public WeatherController(IValidation<ForecastRequest> postalCodeValidation, ForecastService forecastService)
+    public WeatherController(IValidation<ForecastRequest> postalCodeValidation, IForecastService forecastService)
     {
         this.postalCodeValidation = postalCodeValidation ?? throw new ArgumentNullException(nameof(postalCodeValidation));
         this.forecastService = forecastService ?? throw new ArgumentNullException(nameof(forecastService));
