@@ -6,14 +6,25 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddEndpointsApiExplorer()
     .AddControllers();
+
 builder.Services
     .AddSwaggerGen()
     .AddDependencies();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 
 var app = builder.Build();
 
-
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
