@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Api.Practice.Entities;
 using Api.Practice.Resources;
 using Api.Practice.Services;
 using Microsoft.AspNetCore.Http;
@@ -23,9 +24,9 @@ public class TodoController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<TodoItemResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetTodos(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
-        var todos = await this.todoService.GetTodosAsync();
+        var todos = await this.todoService.GetAllAsync();
 
         var response = todos.Select(t => new TodoItemResponse
         {
@@ -41,9 +42,9 @@ public class TodoController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetTodoById(int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
     {
-        var todo = await this.todoService.GetTodoByIdAsync(id);
+        var todo = await this.todoService.GetByIdAsync(id);
 
         if (todo is null)
             return NotFound();
@@ -57,5 +58,58 @@ public class TodoController : ControllerBase
         };
 
         return Ok(response);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Create([FromBody] TodoItemRequest request, CancellationToken cancellationToken)
+    {
+        var todo = await this.todoService.CreateAsync(new TodoItem
+        {
+            Title = request.Title,
+            Description = request.Description,
+            IsCompleted = request.IsCompleted
+        });
+
+        return Ok(todo.Id);
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(TodoItemResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(int id, [FromBody] TodoItemRequest request, CancellationToken cancellationToken)
+    {
+        var todo = await this.todoService.UpdateAsync(id, new TodoItem
+        {
+            Title = request.Title,
+            Description = request.Description,
+            IsCompleted = request.IsCompleted
+        });
+
+        if (todo is null)
+            return NotFound();
+
+        var response = new TodoItemResponse
+        {
+            Id = todo.Id,
+            Title = todo.Title,
+            Description = todo.Description,
+            IsCompleted = todo.IsCompleted
+        };
+
+        return Ok(response);
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+    {
+        var deleted = await this.todoService.DeleteAsync(id);
+
+        if (!deleted)
+            return NotFound();
+
+        return Ok(deleted);
     }
 }
