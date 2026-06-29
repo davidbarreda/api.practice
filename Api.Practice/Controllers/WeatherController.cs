@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Mvc;
 [ApiController]
 public class WeatherController : ControllerBase
 {
-    private readonly IValidation<ForecastRequest> postalCodeValidation;
+    private readonly IValidation<ForecastRequest> forecastDateValidation;
     private readonly IForecastService forecastService;
 
-    public WeatherController(IValidation<ForecastRequest> postalCodeValidation, IForecastService forecastService)
+    public WeatherController(IValidation<ForecastRequest> forecastDateValidation, IForecastService forecastService)
     {
-        this.postalCodeValidation = postalCodeValidation ?? throw new ArgumentNullException(nameof(postalCodeValidation));
+        this.forecastDateValidation = forecastDateValidation ?? throw new ArgumentNullException(nameof(forecastDateValidation));
         this.forecastService = forecastService ?? throw new ArgumentNullException(nameof(forecastService));
     }
 
@@ -28,7 +28,7 @@ public class WeatherController : ControllerBase
     public async Task<IActionResult> GetForecast([FromQuery] ForecastRequest request, CancellationToken cancellationToken)
     {
 
-        var validationResult = await this.postalCodeValidation.IsValid(request);
+        var validationResult = await this.forecastDateValidation.IsValid(request);
         
         if(!validationResult)
             return BadRequest();

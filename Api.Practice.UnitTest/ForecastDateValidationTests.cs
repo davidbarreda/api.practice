@@ -4,29 +4,29 @@ using Api.Practice.Resources;
 using Api.Practice.Validations;
 using AwesomeAssertions;
 
-public class PostalCodeValidationTests
+public class ForecastDateValidationTests
 {
-    private PostalCodeValidation postalCodeValidation;
+    private ForecastDateValidation forecastDateValidation;
 
-    public PostalCodeValidationTests()
+    public ForecastDateValidationTests()
     {
-        this.postalCodeValidation = new PostalCodeValidation();
+        this.forecastDateValidation = new ForecastDateValidation();
     }
-    
+
     [Theory]
     [InlineData("08001", true)]
     [InlineData("00001", false)]
     public void Validate_postal_codes(string value, bool expected)
     {
         // Arrange
-        this.postalCodeValidation = new PostalCodeValidation();
+        this.forecastDateValidation = new ForecastDateValidation();
         var request = new ForecastRequest
         {
             PostalCode = value
         };
 
         // Act
-        var result = this.postalCodeValidation.IsValid(request);
+        var result = this.forecastDateValidation.IsValid(request);
 
         // Assert
         result.Should().Be(expected);
