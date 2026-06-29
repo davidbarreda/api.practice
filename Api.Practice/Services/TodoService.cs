@@ -3,24 +3,39 @@ namespace Api.Practice.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Practice.Data;
 using Api.Practice.Entities;
+using Microsoft.EntityFrameworkCore;
 
 public class TodoService : ITodoService
 {
-    private static readonly List<TodoItem> _todos =
-    [
-        new TodoItem { Id = 1, Title = "Buy groceries", Description = "Milk, bread and eggs", IsCompleted = false },
-        new TodoItem { Id = 2, Title = "Read a book", Description = "Finish the current chapter", IsCompleted = false },
-        new TodoItem { Id = 3, Title = "Go for a run", Description = "30 minutes in the park", IsCompleted = true },
-    ];
+    private readonly AppDbContext context;
 
-    public Task<List<TodoItem>> GetTodosAsync()
+    public TodoService(AppDbContext context)
     {
-        return Task.FromResult(_todos);
+        this.context = context;
     }
 
-    public Task<TodoItem?> GetTodoByIdAsync(int id)
+    public async Task<List<TodoItem>> GetTodosAsync()
     {
-        return Task.FromResult(_todos.FirstOrDefault(t => t.Id == id));
+        return await this.context.TodoItems
+            .Include(t => t.Tags)
+            .Select(t => new TodoItem
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Description = t.Description,
+                IsCompleted = t.IsCompleted
+            })
+            .ToListAsync();
+    }
+
+    public async Task<TodoItem?> GetTodoByIdAsync(int id)
+    {
+        var todos = await this.context.TodoItems
+            .Include(t => t.Tags)
+            .ToListAsync();
+
+        return todos.FirstOrDefault(t => t.Id == id);
     }
 }

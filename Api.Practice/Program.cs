@@ -24,6 +24,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.SeedDatabase();
+
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseSwagger();
