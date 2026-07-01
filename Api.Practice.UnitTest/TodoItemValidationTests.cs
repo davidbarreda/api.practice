@@ -4,11 +4,11 @@ using Api.Practice.Dtos;
 using Api.Practice.Validations;
 using AwesomeAssertions;
 
-public class TodoServiceTests
+public class TodoItemValidationTests
 {
     private readonly TodoItemValidation todoItemValidation;
 
-    public TodoServiceTests()
+    public TodoItemValidationTests()
     {
         this.todoItemValidation = new TodoItemValidation();
     }
