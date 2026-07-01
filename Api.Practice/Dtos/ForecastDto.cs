@@ -1,8 +1,8 @@
-﻿namespace Api.Practice.Resources;
+namespace Api.Practice.Dtos;
 
 using System;
 
-public class ForecastResponse
+public class ForecastDto
 {
     public string PostalCode { get; set; }
     public string Time { get; set; }

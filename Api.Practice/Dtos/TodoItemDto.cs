@@ -1,6 +1,6 @@
-namespace Api.Practice.Resources;
+namespace Api.Practice.Dtos;
 
-public class TodoItemResponse
+public class TodoItemDto
 {
     public int Id { get; set; }
     public string Title { get; set; }

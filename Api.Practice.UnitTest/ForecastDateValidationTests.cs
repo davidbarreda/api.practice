@@ -1,6 +1,6 @@
 ﻿namespace Api.Practice.UnitTest;
 
-using Api.Practice.Resources;
+using Api.Practice.Dtos;
 using Api.Practice.Validations;
 using AwesomeAssertions;
 
@@ -20,7 +20,7 @@ public class ForecastDateValidationTests
     {
         // Arrange
         this.forecastDateValidation = new ForecastDateValidation();
-        var request = new ForecastRequest
+        var request = new ForecastDto
         {
             PostalCode = value
         };

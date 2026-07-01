@@ -1,7 +1,9 @@
 namespace Api.Practice.Extensions;
 
 using Api.Practice.Data;
+using Api.Practice.Dtos;
 using Api.Practice.Services;
+using Api.Practice.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

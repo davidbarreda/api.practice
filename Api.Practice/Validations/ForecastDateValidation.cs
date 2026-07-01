@@ -2,9 +2,9 @@
 
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Api.Practice.Resources;
+using Api.Practice.Dtos;
 
-public class ForecastDateValidation : IValidation<ForecastRequest>
+public class ForecastDateValidation : IValidation<ForecastDto>
 {
     private readonly Regex postalCodeRegex;
     private readonly Regex dateRegex;
@@ -15,7 +15,7 @@ public class ForecastDateValidation : IValidation<ForecastRequest>
         this.dateRegex = new Regex(@"^\d{4}/(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])$");
     }
 
-    public Task<bool> IsValid(ForecastRequest request)
+    public Task<bool> IsValid(ForecastDto request)
     {
         return Task.FromResult(IsValidDate(request.Time) && IsValidPostalCode(request.PostalCode));
     }
