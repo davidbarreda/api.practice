@@ -1,0 +1,17 @@
+<h2>Listado de tareas</h2>
+
+<p *ngIf="isLoading" class="status">Cargando tareas...</p>
+<p *ngIf="!isLoading && tasks.length === 0" class="status">No hay tareas todavia.</p>
+
+<ul *ngIf="!isLoading && tasks.length > 0" class="task-list">
+  <li *ngFor="let task of tasks; trackBy: trackByTaskId" [class.done]="task.isCompleted">
+    <div class="task-main">
+      <label class="checkbox-row">
+        <input type="checkbox" [checked]="task.isCompleted" (change)="onToggleCompleted(task)" />
+        <span class="task-title">{{ task.title || 'Sin titulo' }}</span>
+      </label>
+      <p class="task-description" *ngIf="task.description">{{ task.description }}</p>
+    </div>
+
+  </li>
+</ul>

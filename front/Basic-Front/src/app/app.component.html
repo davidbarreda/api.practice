@@ -1,0 +1,28 @@
+<div class="page">
+  <main class="todo-shell">
+    <header class="shell-header">
+      <h1>Gestor de tareas</h1>
+      <p>Crea, consulta y actualiza tareas desde el backend.</p>
+    </header>
+
+    <section class="panel create-panel">
+      <app-add-task-card
+        [isSubmitting]="isSubmitting"
+        [isLoading]="isLoading"
+        (createTask)="createTask($event)"
+        (reloadTasks)="loadTasks()"
+      ></app-add-task-card>
+    </section>
+
+    <p *ngIf="errorMessage" class="message error">{{ errorMessage }}</p>
+    <p *ngIf="successMessage" class="message success">{{ successMessage }}</p>
+
+    <section class="panel list-panel">
+      <app-task-list
+        [tasks]="tasks"
+        [isLoading]="isLoading"
+        (toggleCompleted)="toggleCompleted($event)"
+      ></app-task-list>
+    </section>
+  </main>
+</div>

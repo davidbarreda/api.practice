@@ -1,0 +1,58 @@
+.task-form {
+  display: grid;
+  gap: 10px;
+}
+
+label {
+  font-weight: 700;
+}
+
+input[type='text'],
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  background-color: #ffffff;
+  color: var(--ink);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.checkbox-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--accent);
+  color: #f6fffc;
+}
+
+button.secondary {
+  background: #edf3f0;
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

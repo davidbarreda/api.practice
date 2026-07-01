@@ -1,0 +1,73 @@
+:host {
+  --bg-a: #f4efe6;
+  --bg-b: #d9ecdf;
+  --surface: #fffdf8;
+  --surface-2: #f8f3ea;
+  --ink: #1f2a28;
+  --ink-soft: #4d5a57;
+  --accent: #135b50;
+  --accent-soft: #d6ede7;
+  --danger: #b63f2f;
+  --border: #d4dccf;
+  display: block;
+  color: var(--ink);
+  font-family: 'Segoe UI Variable', 'Trebuchet MS', 'Gill Sans', sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, var(--bg-a), transparent 55%),
+    linear-gradient(155deg, #f9f8f5 0%, var(--bg-b) 100%);
+  padding: 24px;
+}
+
+.todo-shell {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+.shell-header h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 2.8vw, 2.5rem);
+  letter-spacing: 0.3px;
+}
+
+.shell-header p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  box-shadow: 0 12px 28px rgba(24, 62, 46, 0.08);
+}
+
+.message {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.message.error {
+  background-color: #ffe8e4;
+  color: #8a2619;
+  border: 1px solid #f4b7ae;
+}
+
+.message.success {
+  background-color: var(--accent-soft);
+  color: #0f5349;
+  border: 1px solid #abd7cb;
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 14px;
+  }
+}

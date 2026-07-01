@@ -1,0 +1,41 @@
+<form (ngSubmit)="submitTask()" #taskForm="ngForm" class="task-form">
+  <label for="title">Titulo</label>
+  <input
+    id="title"
+    type="text"
+    name="title"
+    [(ngModel)]="newTask.title"
+    required
+    maxlength="100"
+    placeholder="Ej. Preparar demo"
+  />
+
+  <label for="description">Descripcion</label>
+  <textarea
+    id="description"
+    name="description"
+    [(ngModel)]="newTask.description"
+    rows="3"
+    maxlength="300"
+    placeholder="Detalles opcionales"
+  ></textarea>
+
+  <label class="checkbox-row" for="isCompleted">
+    <input
+      id="isCompleted"
+      type="checkbox"
+      name="isCompleted"
+      [(ngModel)]="newTask.isCompleted"
+    />
+    Crear como completada
+  </label>
+
+  <div class="actions">
+    <button type="submit" [disabled]="isSubmitting || !taskForm.form.valid">
+      {{ isSubmitting ? 'Guardando...' : 'Agregar tarea' }}
+    </button>
+    <button type="button" class="secondary" (click)="reload()" [disabled]="isLoading">
+      Recargar
+    </button>
+  </div>
+</form>
