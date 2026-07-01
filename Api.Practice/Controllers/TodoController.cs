@@ -2,11 +2,9 @@ namespace Api.Practice.Controllers;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Api.Practice.Dtos;
-using Api.Practice.Entities;
 using Api.Practice.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,16 +25,7 @@ public class TodoController : ControllerBase
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var todos = await this.todoService.GetAllAsync();
-
-        var response = todos.Select(t => new TodoItemDto
-        {
-            Id = t.Id,
-            Title = t.Title,
-            Description = t.Description,
-            IsCompleted = t.IsCompleted
-        });
-
-        return Ok(response);
+        return Ok(todos);
     }
 
     [HttpGet("{id}")]
@@ -49,29 +38,15 @@ public class TodoController : ControllerBase
         if (todo is null)
             return NotFound();
 
-        var response = new TodoItemDto
-        {
-            Id = todo.Id,
-            Title = todo.Title,
-            Description = todo.Description,
-            IsCompleted = todo.IsCompleted
-        };
-
-        return Ok(response);
+        return Ok(todo);
     }
 
     [HttpPost]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     public async Task<IActionResult> Create([FromBody] TodoItemDto request, CancellationToken cancellationToken)
     {
-        var todo = await this.todoService.CreateAsync(new TodoItem
-        {
-            Title = request.Title,
-            Description = request.Description,
-            IsCompleted = request.IsCompleted
-        });
-
-        return Ok(todo.Id);
+        var id = await this.todoService.CreateAsync(request);
+        return Ok(id);
     }
 
     [HttpPut("{id}")]
@@ -79,25 +54,12 @@ public class TodoController : ControllerBase
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update(int id, [FromBody] TodoItemDto request, CancellationToken cancellationToken)
     {
-        var todo = await this.todoService.UpdateAsync(id, new TodoItem
-        {
-            Title = request.Title,
-            Description = request.Description,
-            IsCompleted = request.IsCompleted
-        });
+        var todo = await this.todoService.UpdateAsync(id, request);
 
         if (todo is null)
             return NotFound();
 
-        var response = new TodoItemDto
-        {
-            Id = todo.Id,
-            Title = todo.Title,
-            Description = todo.Description,
-            IsCompleted = todo.IsCompleted
-        };
-
-        return Ok(response);
+        return Ok(todo);
     }
 
     [HttpDelete("{id}")]
@@ -110,6 +72,6 @@ public class TodoController : ControllerBase
         if (!deleted)
             return NotFound();
 
-        return Ok(deleted);
+        return NoContent();
     }
 }
