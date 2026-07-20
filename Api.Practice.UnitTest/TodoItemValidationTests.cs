@@ -16,16 +16,17 @@ public class TodoItemValidationTests
     [Theory]
     [InlineData("Buy groceries", true)]
     [InlineData("", false)]
-    public void Validate_todo_items(string title, bool expected)
+    public async Task Validate_todo_items(string title, bool expected)
     {
         // Arrange
         var request = new TodoItemDto
         {
-            Title = title
+            Title = title,
+            Description = "Sample description"
         };
 
         // Act
-        var result = this.todoItemValidation.IsValid(request);
+        var result = await this.todoItemValidation.IsValid(request);
 
         // Assert
         result.Should().Be(expected);

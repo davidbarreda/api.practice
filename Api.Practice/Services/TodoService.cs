@@ -34,9 +34,10 @@ public class TodoService : ITodoService
 
     public async Task<int> CreateAsync(TodoItemDto dto)
     {
+        var re = await validation.IsValid(dto);
         if (!await validation.IsValid(dto))
         {
-            throw new ArgumentException("Invalid TodoItemDto");
+            throw new ArgumentException("Invalid TodoItemDto2");
         }
 
         var item = await this.todoRepository.CreateAsync(MapToEntity(dto));
