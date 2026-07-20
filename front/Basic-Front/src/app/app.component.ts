@@ -82,6 +82,21 @@ export class AppComponent implements OnInit {
     });
   }
 
+  deleteTask(id: number): void {
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.todoService.deleteTask(id).subscribe({
+      next: () => {
+        this.successMessage = 'Tarea eliminada correctamente.';
+        this.tasks = this.tasks.filter((t) => t.id !== id);
+      },
+      error: (error) => {
+        this.errorMessage = this.getFriendlyError(error, 'No se pudo eliminar la tarea.');
+      }
+    });
+  }
+
   private getFriendlyError(error: unknown, fallback: string): string {
     if (error instanceof HttpErrorResponse) {
       const status = String(error.status);

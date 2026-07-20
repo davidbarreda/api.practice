@@ -11,6 +11,7 @@
         <span class="task-title">{{ task.title || 'Sin titulo' }}</span>
       </label>
       <p class="task-description" *ngIf="task.description">{{ task.description }}</p>
+      <button (click)="onDeleteTask(task.id)">Eliminar</button>
     </div>
 
   </li>

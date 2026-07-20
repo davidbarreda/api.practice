@@ -11,6 +11,7 @@ export class TaskListComponent {
   @Input() isLoading = false;
 
   @Output() toggleCompleted = new EventEmitter<TodoItem>();
+  @Output() deleteTask = new EventEmitter<number>();
 
   onToggleCompleted(task: TodoItem): void {
     this.toggleCompleted.emit(task);
@@ -18,5 +19,11 @@ export class TaskListComponent {
 
   trackByTaskId(index: number, task: TodoItem): number {
     return task.id ?? index;
+  }
+
+  onDeleteTask(id?: number): void {
+    if (id !== undefined) {
+      this.deleteTask.emit(id);
+    }
   }
 }

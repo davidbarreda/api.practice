@@ -23,4 +23,8 @@ export class TodoService {
   updateTask(taskId: number, payload: TodoItem): Observable<TodoItem> {
     return this.http.put<TodoItem>(`${this.apiTodoUrl}/${taskId}`, payload);
   }
+
+  deleteTask(taskId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiTodoUrl}/${taskId}`);
+  }
 }
