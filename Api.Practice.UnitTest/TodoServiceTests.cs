@@ -28,6 +28,7 @@ public class TodoServiceTests
         var dto = new TodoItemDto { Title = "Buy groceries", Description = "Milk and eggs" };
         var createdItem = new TodoItem { Id = 1, Title = dto.Title };
 
+        this.validation.IsValid(dto).Returns(Task.FromResult(true));
         this.todoRepository.CreateAsync(Arg.Any<TodoItem>()).Returns(Task.FromResult(createdItem));
 
         // Act
